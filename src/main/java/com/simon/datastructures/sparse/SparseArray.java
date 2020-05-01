@@ -1,5 +1,7 @@
 package com.simon.datastructures.sparse;
 
+import sun.misc.Unsafe;
+
 /**
  * 稀疏数组
  *
@@ -31,6 +33,11 @@ public class SparseArray {
         }
     }
 
+    /**
+     *  根据稀疏数组的第一行的数据来创建二维数组
+     *  稀疏数组第一行存的是原始数组的行列
+     *  从第1行开始遍历稀疏数组将数据恢复到原始数组中
+     */
     public static int[][] convert2RawArray(int[][] sparse) {
         int[][] rawArray = new int[sparse[0][0]][sparse[0][1]];
         for (int i = 1; i < sparse.length; i++)
@@ -41,6 +48,12 @@ public class SparseArray {
     /**
      * 稀疏数组的row = 原始数组的有效数据量+1
      * 稀疏数组的column = 3
+     * <p>
+     * row(元素数组中的行) column(原始数组中的列) data(原始数组中的时机数据)
+     * <p>
+     * 1.遍历原始数组，得到有效个数validCount
+     * 2.根据validCount创建稀疏数组 sparse[validCount+1][3]
+     * 3.将二维数组的有效数据存入到稀疏数组
      */
     public static int[][] convert2SparseArray(int[][] array) {
         int validCount = 0;
