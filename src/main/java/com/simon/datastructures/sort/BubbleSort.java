@@ -13,6 +13,10 @@ public class BubbleSort {
 		System.out.println("final ->  " + Arrays.toString(array));
 	}
 
+	/**
+	 * 两两进行比较依次把最大值放到数据的尾部
+	 * 即 每次都把最大值放到后面
+	 */
 	public static void bubble(int[] array) {
 		// 时间复杂度 O(n²)
 		boolean swap = false;
