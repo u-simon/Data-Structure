@@ -14,15 +14,14 @@ public class BubbleSort {
 	}
 
 	/**
-	 * 两两进行比较依次把最大值放到数据的尾部
-	 * 即 每次都把最大值放到后面
+	 * 两两进行比较依次把最大值放到数据的尾部 即 每次都把最大值放到后面
 	 */
 	public static void bubble(int[] array) {
 		// 时间复杂度 O(n²)
 		boolean swap = false;
 		// 外层循环比较次数
 		for (int i = 0; i < array.length - 1; i++) {
-			// 内层循环比较交换
+			// 内层循环比较交换 length的目的是因为下面有个j+1
 			for (int j = 0; j < array.length - 1 - i; j++) {
 				if (array[j] > array[j + 1]) {
 					swap = true;
