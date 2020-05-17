@@ -14,9 +14,11 @@ public class BubbleSort {
 	}
 
 	public static void bubble(int[] array) {
-
+		// 时间复杂度 O(n²)
 		boolean swap = false;
+		// 外层循环比较次数
 		for (int i = 0; i < array.length - 1; i++) {
+			// 内层循环比较交换
 			for (int j = 0; j < array.length - 1 - i; j++) {
 				if (array[j] > array[j + 1]) {
 					swap = true;
