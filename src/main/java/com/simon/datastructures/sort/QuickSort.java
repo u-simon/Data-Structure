@@ -10,7 +10,8 @@ public class QuickSort {
 
 
 	public static void main(String[] args) {
-		 int[] array = {-9, 78, 0, 23, -567, 70};
+		int[] array = {-9, 78, 23, 0, -567, 70, -1111, 0, 143, -543, 222};
+		// int[] array = {-9, -567};
 		quick(array, 0, array.length - 1);
 		System.out.println(Arrays.toString(array));
 	}
@@ -41,6 +42,15 @@ public class QuickSort {
 			array[l] = array[l] ^ array[r];
 			array[r] = array[l] ^ array[r];
 			array[l] = array[l] ^ array[r];
+
+			// 存在相同的值的时候
+			if (array[l] == pivot) {
+				r--;
+			}
+
+			if (array[r] == pivot) {
+				l++;
+			}
 		}
 		// l==r 说明 他俩都找到了 l == medium == r的位置
 		// 进行左边的遍历则为 left ~ r-1 右边的遍历 则是 l + 1 ~ right
