@@ -1,5 +1,7 @@
 package com.simon.datastructures.tree;
 
+import com.sun.codemodel.internal.JWhileLoop;
+
 /**
  * @author simon
  * @date 2020/5/31 3:27 下午
@@ -26,10 +28,15 @@ public class BinaryTree {
 
 		System.out.println();
 
-		root.postOrder();  //2 5 4 3 1
+		root.postOrder(); // 2 5 4 3 1
 
+//		System.out.println(root.preOrderSearch(5));
+//		System.out.println(root.infixOrderSearch(5));
+
+		System.out.println(root.postOrderSearch(5));
 	}
 }
+
 
 class Node {
 	private int no;
@@ -94,5 +101,78 @@ class Node {
 		System.out.println(this);
 	}
 
+	/**
+	 * 先序查找
+	 * 
+	 * @param no
+	 * @return
+	 */
+	public Node preOrderSearch(int no) {
+		System.out.println("先序查找");
+		if (this.no == no) {
+			return this;
+		}
+		Node node = null;
+		if (this.left != null) {
+			node = this.left.preOrderSearch(no);
+		}
+		if (node != null) {
+			return node;
+		}
 
+		if (this.right != null) {
+			node = this.right.preOrderSearch(no);
+		}
+		return node;
+	}
+
+	/**
+	 * 中序查找
+	 * 
+	 * @param no
+	 * @return
+	 */
+	public Node infixOrderSearch(int no) {
+		Node node = null;
+		if (this.left != null) {
+			node = this.left.infixOrderSearch(no);
+		}
+		if (node != null) {
+			return node;
+		}
+		System.out.println("中序查找~");
+		if (this.no == no) {
+			return this;
+		}
+		if (this.right != null) {
+			node = this.right.infixOrderSearch(no);
+		}
+		return node;
+	}
+
+	/**
+	 *
+	 * @param no
+	 * @return
+	 */
+	public Node postOrderSearch(int no){
+		Node node = null;
+		if (this.left != null){
+			node	= this.left.postOrderSearch(no);
+		}
+		if (node != null){
+			return node	;
+		}
+		if (this.right != null){
+			node = this.right.postOrderSearch(no);
+		}
+		if (node != null){
+			return node;
+		}
+		System.out.println("后序查找~");
+		if (this.no == no){
+			return this;
+		}
+		return node;
+	}
 }
