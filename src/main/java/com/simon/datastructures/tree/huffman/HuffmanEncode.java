@@ -15,7 +15,7 @@ public class HuffmanEncode {
 	public static void main(String[] args) {
 		String content = "i like like like java do you like a java";
 		byte[] zip = huffmanZip(content.getBytes());
-//		System.out.println(Arrays.toString(zip));
+		// System.out.println(Arrays.toString(zip));
 
 		byte[] decode = decode(zip, huffmanCodes);
 		System.out.println(new String(decode));
@@ -27,6 +27,7 @@ public class HuffmanEncode {
 		// 将字节数组转换成 str
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < dates.length; i++) {
+			// 最后一位不进行拼接
 			sb.append(byte2String((i != dates.length - 1), dates[i]));
 		}
 		// System.out.println(sb.toString());
@@ -41,6 +42,7 @@ public class HuffmanEncode {
 		// 进行解码
 		List<Byte> list = new ArrayList<>();
 		StringBuilder key = new StringBuilder();;
+		// 将字符串解码成byte数组
 		for (int i = 0; i < sb.length(); i++) {
 			key.append(sb.charAt(i));
 			Byte aByte = map.get(key.toString());
@@ -56,13 +58,15 @@ public class HuffmanEncode {
 		return bytes;
 	}
 
+	/**
+	 * 解码时 将字符数组 转换成原先的字符串
+	 */
 	private static String byte2String(boolean flag, byte data) {
 		int temp = data;
-
 		if (flag) {
+			// 正数 前面0会被省略掉 不够8位数
 			temp |= 256;
 		}
-
 		String str = Integer.toBinaryString(temp);
 		if (flag) {
 			return str.substring(str.length() - 8);
@@ -71,28 +75,29 @@ public class HuffmanEncode {
 	}
 
 	private static byte[] huffmanZip(byte[] bytes) {
+		// 将数据构造成结点数据 data为字符 weight出现的次数
 		List<DataNode> nodes = getNodes(bytes);
 		// 构造哈夫曼数
 		DataNode treeify = treeify(nodes);
 		// 生成哈夫曼码表
 		getCodes(treeify);
+		// 将字符数据进行赫夫曼编码
 		return zip(bytes, huffmanCodes);
 	}
 
 
 	public static byte[] zip(byte[] bytes, Map<Byte, String> huffmanTable) {
-
 		StringBuilder sb = new StringBuilder();
 		// 把原先的字节数组转换成赫夫曼编码后的字符串
 		for (byte aByte : bytes) {
 			sb.append(huffmanTable.get(aByte));
 		}
-
 		// 把字符串转换成字节数组
 		int len = (sb.length() + 7) / 8;
 		byte[] huffmanBytes = new byte[len];
 
 		int index = 0;
+		// 每8位转换成byte类型
 		for (int i = 0; i < sb.length(); i += 8) {
 			String str;
 			if (i + 8 > sb.length()) {
@@ -106,15 +111,17 @@ public class HuffmanEncode {
 	}
 
 
-	public static void getCodes(DataNode root) {
+	public static Map<Byte, String> getCodes(DataNode root) {
 		if (root == null) {
-			return;
+			return null;
 		}
 		StringBuilder stringBuffer = new StringBuilder();
 		// 向左递归
 		getCodes(root.left, "0", stringBuffer);
 		// 向右递归
 		getCodes(root.right, "1", stringBuffer);
+
+		return huffmanCodes;
 	}
 
 	/**
@@ -132,13 +139,10 @@ public class HuffmanEncode {
 				// 当前节点为非叶子结点
 				// 向左递归
 				getCodes(node.left, "0", sb);
-
 				// 向右递归
 				getCodes(node.right, "1", sb);
-
 				return;
 			}
-
 			// 叶子结点 将路径保存到map中
 			huffmanCodes.put(node.data, sb.toString());
 		}
@@ -148,7 +152,6 @@ public class HuffmanEncode {
 	 * 构造赫夫曼树
 	 */
 	public static DataNode treeify(List<DataNode> nodes) {
-
 		while (nodes.size() > 1) {
 			Collections.sort(nodes);
 
@@ -160,7 +163,6 @@ public class HuffmanEncode {
 
 			nodes.add(parent);
 		}
-
 		return nodes.get(0);
 	}
 
@@ -171,6 +173,7 @@ public class HuffmanEncode {
 	private static List<DataNode> getNodes(byte[] dates) {
 		List<DataNode> nodes = new ArrayList<>();
 		Map<Byte, Integer> nodeMap = new HashMap<>();
+		// 计算字符对应的个数
 		for (byte date : dates) {
 			Integer count = nodeMap.get(date);
 			if (count == null) {
@@ -178,6 +181,7 @@ public class HuffmanEncode {
 			}
 			nodeMap.put(date, count + 1);
 		}
+		// byte字节 对应的次数 构造对应的结点
 		for (Map.Entry<Byte, Integer> entry : nodeMap.entrySet()) {
 			nodes.add(new DataNode(entry.getKey(), entry.getValue()));
 		}
