@@ -10,20 +10,19 @@ public class PrimAlgorithm {
 
 
 	public static void main(String[] args) {
-
 		char[] data = new char[] {'A', 'B', 'C', 'D', 'E', 'F', 'G'};
 		int verxs = data.length;
-		int[][] weight = new int[][] {{100000, 5, 7, 100000, 100000, 100000, 2},
+		int[][] weight = new int[][] {
+				{100000, 5, 7, 100000, 100000, 100000, 2},
 				{5, 100000, 100000, 9, 100000, 100000, 3},
 				{7, 100000, 100000, 100000, 8, 100000, 100000},
 				{100000, 9, 100000, 100000, 100000, 4, 100000},
 				{100000, 100000, 8, 100000, 100000, 5, 4},
-				{100000, 100000, 100000, 4, 5, 100000, 6}, {2, 3, 100000, 100000, 4, 6, 100000}};
+				{100000, 100000, 100000, 4, 5, 100000, 6},
+				{2, 3, 100000, 100000, 4, 6, 100000}};
 		MinTree minTree = new MinTree();
 		minTree.createMGraph(verxs, data, weight);
-
 		minTree.showGraph();
-
 		minTree.prim(2);
 	}
 }
@@ -48,12 +47,9 @@ class MinTree {
 		boolean[] visited = new boolean[mGraph.verxs];
 		// 标记index为反问过
 		visited[index] = true;
-
 		// h1,h2记录两个顶点的坐标
 		int h1 = -1, h2 = -1;
-
 		int minWeight;
-
 		// 因为有verxs个顶点 所以需要生成verxs-1条边把所有顶点连接起来
 		for (int i = 1; i < mGraph.verxs; i++) {
 			minWeight = 100000;
@@ -68,14 +64,11 @@ class MinTree {
 					}
 				}
 			}
-
 			System.out
 					.println("边<" + mGraph.data[h1] + "," + mGraph.data[h2] + ">权值 : " + minWeight);
 			// 设置这个节点被访问过
 			visited[h2] = true;
-
 		}
-
 	}
 }
 
